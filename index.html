@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Will You Be Mine? 💖</title>
+  <style>
+    body{margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;
+      background:linear-gradient(135deg,#ff9a9e,#fecfef,#fcb69f);font-family:sans-serif;overflow:hidden;text-align:center}
+    h1{color:#b30059;text-shadow:1px 1px 5px #fff}
+    img{max-width:300px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.3);margin:20px}
+    button{padding:10px 20px;margin:5px;border:none;border-radius:8px;font-size:1.1rem;cursor:pointer}
+    #yesBtn{background:#ff4da6;color:#fff} #noBtn{background:#ff1a1a;color:#fff;position:absolute}
+    .heart,.star{position:absolute;bottom:-20px;animation:float 6s linear infinite;opacity:.8}
+    @keyframes float{0%{transform:translateY(0)}100%{transform:translateY(-120vh)}}
+    .broken{position:absolute;font-size:24px;animation:fall 2.5s ease-out forwards}
+    @keyframes fall{to{transform:translateY(120vh) rotate(180deg) scale(.5);opacity:0}}
+  </style>
+</head>
+<body>
+  <h1 id="q">Will you go out with me? 💖</h1>
+  <img id="gif" src="https://media0.giphy.com/media/qdhx91DZB1ApRE8ieK/giphy.gif">
+  <div>
+    <button id="yesBtn">Yes 💕</button>
+    <button id="noBtn">No 😢</button>
+  </div>
+
+  <!-- 🎵 AUDIO FILES -->
+  <!-- Replace the src links with your own .mp3 files -->
+  <audio id="crack" src="https://www.myinstants.com/en/instant/ek-gand-pe-repta-mara-n-sarak-pe-hagta-firega-11613/?utm_source=copy&utm_medium=share"></audio> <!-- add audio here for NO click -->
+  <audio id="pop" src="https://www.myinstants.com/media/sounds/pop.mp3"></audio> <!-- add audio here for new heart pop -->
+  <audio id="yay" src="https://www.myinstants.com/media/sounds/kids-cheering.mp3"></audio> <!-- add audio here for YES -->
+
+  <script>
+    let steps=[
+      {t:"Will you really say no? 🥺",g:"https://media.giphy.com/media/a9xhxAxaqOfQs/giphy.gif"},
+      {t:"Are you sure...? 😢",g:"https://media.giphy.com/media/M28rUlcjueKUE/giphy.gif"},
+      {t:"Think again 🤔",g:"https://media.giphy.com/media/NpL4D3Oc2bJUMAXF9P/giphy.gif"},
+      {t:"Don’t break my heart 💔",g:"https://media.giphy.com/media/fSkpUE72ynxPsKVNYW/giphy.gif"},
+      {t:"Last chance 👀",g:"https://media.giphy.com/media/I1nwVpCaB4k36/giphy.gif"},
+      {t:"You know you wanna say YES 💕",g:"https://media.giphy.com/media/PPmHsxVG53YKT9N8C7/giphy.gif"}
+    ];
+    let yesGif="https://media1.giphy.com/media/PTz5sIQPSOI5l5jiBA/giphy.gif";
+    let q=document.getElementById("q"),gif=document.getElementById("gif"),no=document.getElementById("noBtn"),yes=document.getElementById("yesBtn");
+    let crack=document.getElementById("crack"),pop=document.getElementById("pop"),yay=document.getElementById("yay");
+    let c=0,run=false;
+
+    no.onclick=()=>{
+      crack.play();   // 🔊 plays NO sound (glass break by default)
+      breakHearts(10); 
+      if(c<steps.length){q.textContent=steps[c].t;gif.src=steps[c].g;if(c==4)run=true;c++}
+      else{q.textContent="Okay fine, but I know you mean YES 😘";gif.src=yesGif;}
+    }
+    yes.onclick=()=>{
+      q.textContent="Yayyy! You said YES ❤️🥳✨";gif.src=yesGif;
+      no.style.display=yes.style.display="none";yay.play(); // 🔊 plays YES sound (kids cheer by default)
+    }
+    document.onmousemove=e=>{
+      if(run){
+        let r=no.getBoundingClientRect(),d=Math.hypot(e.clientX-(r.left+r.width/2),e.clientY-(r.top+r.height/2));
+        if(d<100){no.style.left=Math.random()*(innerWidth-r.width)+"px";no.style.top=Math.random()*(innerHeight-r.height)+"px";}
+      }
+    }
+    function floatThing(){
+      let el=document.createElement("div"),h=Math.random()>.5;
+      el.className=h?"heart":"star";el.innerHTML=h?"❤":"★";
+      el.style.left=Math.random()*innerWidth+"px";el.style.fontSize=15+Math.random()*20+"px";
+      el.style.color=["red","hotpink","purple","gold"][Math.floor(Math.random()*4)];
+      document.body.appendChild(el);setTimeout(()=>el.remove(),6000);
+    }
+    setInterval(floatThing,700);
+
+    function breakHearts(n){
+      for(let i=0;i<n;i++){
+        let b=document.createElement("div");b.className="broken";b.innerHTML="💔";
+        b.style.left=Math.random()*innerWidth+"px";b.style.top=Math.random()*200+"px";
+        b.style.fontSize=20+Math.random()*20+"px";document.body.appendChild(b);
+        setTimeout(()=>b.remove(),2500);
+      }
+      for(let j=0;j<5;j++)setTimeout(()=>{pop.play();floatThing();},j*300); // 🔊 plays pop sound with new hearts
+    }
+  </script>
+</body>
+</html>
