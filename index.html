@@ -24,11 +24,8 @@
     <button id="noBtn">No 😢</button>
   </div>
 
-  <!-- 🎵 AUDIO FILES -->
-  <!-- Replace the src links with your own .mp3 files -->
-  <audio id="crack" src="https://drive.google.com/uc?export=download&id=1aYsLeasbZMkokMhjJI45Gb9ss1BcaFdL"></audio> <!-- add audio here for NO click -->
-  <audio id="pop" src=""></audio> <!-- add audio here for new heart pop -->
-  <audio id="yay" src=""></audio> <!-- add audio here for YES -->
+  <!-- 🎵 ONLY NO SOUND -->
+  <audio id="crack" src="ek-gand-pe-repta-mara-n-sarak-pe-hagta-fire.mp3"></audio> <!-- your repo audio file -->
 
   <script>
     let steps=[
@@ -41,18 +38,19 @@
     ];
     let yesGif="https://media1.giphy.com/media/PTz5sIQPSOI5l5jiBA/giphy.gif";
     let q=document.getElementById("q"),gif=document.getElementById("gif"),no=document.getElementById("noBtn"),yes=document.getElementById("yesBtn");
-    let crack=document.getElementById("crack"),pop=document.getElementById("pop"),yay=document.getElementById("yay");
+    let crack=document.getElementById("crack");
     let c=0,run=false;
 
     no.onclick=()=>{
-      crack.play();   // 🔊 plays NO sound (glass break by default)
+      crack.play();   // 🔊 plays NO sound
       breakHearts(10); 
       if(c<steps.length){q.textContent=steps[c].t;gif.src=steps[c].g;if(c==4)run=true;c++}
       else{q.textContent="Okay fine, but I know you mean YES 😘";gif.src=yesGif;}
     }
     yes.onclick=()=>{
-      q.textContent="Yayyy! You said YES ❤️🥳✨";gif.src=yesGif;
-      no.style.display=yes.style.display="none";yay.play(); // 🔊 plays YES sound (kids cheer by default)
+      q.textContent="Yayyy! You said YES ❤️🥳✨";
+      gif.src=yesGif;
+      no.style.display=yes.style.display="none";
     }
     document.onmousemove=e=>{
       if(run){
@@ -76,8 +74,8 @@
         b.style.fontSize=20+Math.random()*20+"px";document.body.appendChild(b);
         setTimeout(()=>b.remove(),2500);
       }
-      for(let j=0;j<5;j++)setTimeout(()=>{pop.play();floatThing();},j*300); // 🔊 plays pop sound with new hearts
     }
   </script>
 </body>
 </html>
+
